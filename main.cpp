@@ -11,7 +11,7 @@
 //      Patricio Javier Garza Rios | A00841942
 //      Daniela Landin Solis | A00841757
 //      Alana Martinez Morales | A00841524
-// Fecha: 10 de junio 2026
+// Fecha: 12 de junio 2026
 
 #include "algoritmos.h"
 #include "json.hpp"

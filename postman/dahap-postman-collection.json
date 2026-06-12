@@ -1,7 +1,7 @@
 {
   "info": {
     "_postman_id": "f2cdd831-1ca5-441a-af01-d6190a983988",
-    "name": "ISP Algorithms API",
+    "name": "DAHAP API",
     "description": "Colección de Postman para probar el servicio de algoritmos ISP (MST, TSP, Flujo Máximo y Central Cercana).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },

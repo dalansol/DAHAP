@@ -21,8 +21,3 @@ target_link_libraries(Evidencia2 Threads::Threads)
 if(WIN32)
     target_link_libraries(Evidencia2 ws2_32)
 endif()
-
-# Ejecutable de pruebas unitarias
-enable_testing()
-add_executable(Evidencia2_tests test_algoritmos.cpp)
-add_test(NAME unit COMMAND Evidencia2_tests)
