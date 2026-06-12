@@ -266,7 +266,7 @@ jobs:
             -Dsonar.sources=.
             -Dsonar.tests=.
             -Dsonar.cfamily.compile-commands=build/compile_commands.json
-            -Dsonar.exclusions=build/**,third_party/**
+            -Dsonar.exclusions=build/**,third_party/**,httplib.h,json.hpp
             -Dsonar.test.inclusions=tests/**/*.cpp
             -Dsonar.coverageReportPaths=build/coverage/sonarqube-coverage.xml
             -Dsonar.verbose=true
