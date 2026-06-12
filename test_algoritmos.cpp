@@ -1,3 +1,5 @@
+// Copyright (c) 2026. All rights reserved.
+//
 // Pruebas unitarias para los algoritmos de la Situacion Problema 2.
 // Verifica los tres casos de prueba de MST, TSP y flujo maximo,
 // ademas de pruebas de distancia euclidiana, central cercana y validacion.
@@ -56,7 +58,7 @@ void probarMstCaso1() {
         {32, 21, 7, 0}
     };
 
-    std::vector<AristaMst> resultado = calcularMst(4, distancias);
+    std::vector<AristaMst> resultado = calcular_mst(4, distancias);
 
     std::set<std::pair<std::string, std::string>> esperado = {
         {"A", "B"}, {"B", "C"}, {"C", "D"}
@@ -78,7 +80,7 @@ void probarMstCaso2() {
         {7, 3, 5, 6, 0}
     };
 
-    std::vector<AristaMst> resultado = calcularMst(5, distancias);
+    std::vector<AristaMst> resultado = calcular_mst(5, distancias);
 
     std::set<std::pair<std::string, std::string>> esperado = {
         {"A", "B"}, {"B", "D"}, {"B", "E"}, {"C", "E"}
@@ -101,7 +103,7 @@ void probarMstCaso3() {
         {9, 8, 2, 7, 4, 0}
     };
 
-    std::vector<AristaMst> resultado = calcularMst(6, distancias);
+    std::vector<AristaMst> resultado = calcular_mst(6, distancias);
 
     std::set<std::pair<std::string, std::string>> esperado = {
         {"A", "D"}, {"C", "F"}, {"A", "B"}, {"B", "E"}, {"A", "C"}
@@ -124,7 +126,7 @@ void probarTspCaso1() {
         {32, 21, 7, 0}
     };
 
-    ResultadoTsp resultado = calcularTsp(4, distancias);
+    ResultadoTsp resultado = calcular_tsp(4, distancias);
     std::vector<std::string> rutaEsperada = {"A", "B", "C", "D", "A"};
 
     verificar(resultado.costo == 73, "Costo es 73");
@@ -143,7 +145,7 @@ void probarTspCaso2() {
         {7, 3, 5, 6, 0}
     };
 
-    ResultadoTsp resultado = calcularTsp(5, distancias);
+    ResultadoTsp resultado = calcular_tsp(5, distancias);
     std::vector<std::string> rutaEsperada = {"A", "B", "D", "C", "E", "A"};
 
     verificar(resultado.costo == 26, "Costo es 26");
@@ -163,7 +165,7 @@ void probarTspCaso3() {
         {9, 8, 2, 7, 4, 0}
     };
 
-    ResultadoTsp resultado = calcularTsp(6, distancias);
+    ResultadoTsp resultado = calcular_tsp(6, distancias);
     std::vector<std::string> rutaEsperada = {"A", "B", "E", "F", "C", "D", "A"};
 
     verificar(resultado.costo == 19, "Costo es 19");
@@ -183,7 +185,7 @@ void probarFlujoCaso1() {
         {24, 36, 52, 0}
     };
 
-    int resultado = calcularFlujoMaximo(4, capacidades);
+    int resultado = calcular_flujo_maximo(4, capacidades);
     verificar(resultado == 78, "Flujo maximo es 78");
 }
 
@@ -199,7 +201,7 @@ void probarFlujoCaso2() {
         {0, 0, 0, 0, 0}
     };
 
-    int resultado = calcularFlujoMaximo(5, capacidades);
+    int resultado = calcular_flujo_maximo(5, capacidades);
     verificar(resultado == 15, "Flujo maximo es 15");
 }
 
@@ -216,7 +218,7 @@ void probarFlujoCaso3() {
         {0, 0, 0, 0, 0, 0}
     };
 
-    int resultado = calcularFlujoMaximo(6, capacidades);
+    int resultado = calcular_flujo_maximo(6, capacidades);
     verificar(resultado == 23, "Flujo maximo es 23");
 }
 
@@ -234,13 +236,13 @@ void probarDistanciaEuclidiana() {
     b.x = 3.0;
     b.y = 4.0;
 
-    double distancia = calcularDistanciaEuclidiana(a, b);
+    double distancia = calcular_distancia_euclidiana(a, b);
     verificar(std::abs(distancia - 5.0) < 0.001, "Distancia (0,0)-(3,4) es 5.0");
 
     Punto c;
     c.x = 1.0;
     c.y = 1.0;
-    double distanciaMisma = calcularDistanciaEuclidiana(c, c);
+    double distanciaMisma = calcular_distancia_euclidiana(c, c);
     verificar(std::abs(distanciaMisma) < 0.001, "Distancia de un punto a si mismo es 0");
 }
 
@@ -264,7 +266,7 @@ void probarCentralCercana() {
     Punto punto1;
     punto1.x = 280.0;
     punto1.y = 120.0;
-    Punto resultado1 = encontrarCentralCercana(centrales, punto1);
+    Punto resultado1 = encontrar_central_cercana(centrales, punto1);
     verificar(std::abs(resultado1.x - 300.0) < 0.001 &&
               std::abs(resultado1.y - 100.0) < 0.001,
               "Central cercana a (280,120) es (300,100)");
@@ -273,7 +275,7 @@ void probarCentralCercana() {
     Punto punto2;
     punto2.x = 500.0;
     punto2.y = 500.0;
-    Punto resultado2 = encontrarCentralCercana(centrales, punto2);
+    Punto resultado2 = encontrar_central_cercana(centrales, punto2);
     verificar(std::abs(resultado2.x - 520.0) < 0.001 &&
               std::abs(resultado2.y - 480.0) < 0.001,
               "Central cercana a (500,500) es (520,480)");
@@ -287,7 +289,7 @@ void probarValidacionN() {
     bool excepcionLanzada = false;
 
     try {
-        validarN(0);
+        validar_n(0);
     } catch (const std::invalid_argument&) {
         excepcionLanzada = true;
     }
@@ -295,7 +297,7 @@ void probarValidacionN() {
 
     excepcionLanzada = false;
     try {
-        validarN(-5);
+        validar_n(-5);
     } catch (const std::invalid_argument&) {
         excepcionLanzada = true;
     }
@@ -303,7 +305,7 @@ void probarValidacionN() {
 
     excepcionLanzada = false;
     try {
-        validarN(3);
+        validar_n(3);
     } catch (const std::invalid_argument&) {
         excepcionLanzada = true;
     }
@@ -321,7 +323,7 @@ void probarValidacionMatriz() {
         {1, 0}
     };
     try {
-        validarDimensionMatriz(3, matrizMalFilas, "test");
+        validar_dimension_matriz(3, matrizMalFilas, "test");
     } catch (const std::invalid_argument&) {
         excepcionLanzada = true;
     }
@@ -335,7 +337,7 @@ void probarValidacionMatriz() {
         {2, 1, 0}
     };
     try {
-        validarDimensionMatriz(3, matrizMalColumnas, "test");
+        validar_dimension_matriz(3, matrizMalColumnas, "test");
     } catch (const std::invalid_argument&) {
         excepcionLanzada = true;
     }
@@ -348,7 +350,7 @@ void probarValidacionMatriz() {
         {1, 0}
     };
     try {
-        validarDimensionMatriz(2, matrizCorrecta, "test");
+        validar_dimension_matriz(2, matrizCorrecta, "test");
     } catch (const std::invalid_argument&) {
         excepcionLanzada = true;
     }
@@ -366,7 +368,7 @@ void probarCentralCercanaVacia() {
     punto.y = 100.0;
 
     try {
-        encontrarCentralCercana(centralesVacias, punto);
+        encontrar_central_cercana(centralesVacias, punto);
     } catch (const std::invalid_argument&) {
         excepcionLanzada = true;
     }
@@ -381,7 +383,7 @@ void probarTspNodoUnico() {
     std::cout << "TSP Nodo Unico:" << std::endl;
     std::vector<std::vector<int>> distancias = {{0}};
 
-    ResultadoTsp resultado = calcularTsp(1, distancias);
+    ResultadoTsp resultado = calcular_tsp(1, distancias);
     std::vector<std::string> rutaEsperada = {"A", "A"};
 
     verificar(resultado.costo == 0, "Costo es 0");
@@ -394,7 +396,7 @@ void probarMstNodoUnico() {
     std::cout << "MST Nodo Unico:" << std::endl;
     std::vector<std::vector<int>> distancias = {{0}};
 
-    std::vector<AristaMst> resultado = calcularMst(1, distancias);
+    std::vector<AristaMst> resultado = calcular_mst(1, distancias);
     verificar(resultado.empty(), "MST vacio para un solo nodo");
 }
 
@@ -404,11 +406,11 @@ void probarFlujoNodoUnico() {
     std::cout << "Flujo Maximo Nodo Unico:" << std::endl;
     std::vector<std::vector<int>> capacidades = {{0}};
 
-    int resultado = calcularFlujoMaximo(1, capacidades);
+    int resultado = calcular_flujo_maximo(1, capacidades);
     verificar(resultado == 0, "Flujo maximo es 0 para un solo nodo");
 }
 
-// Prueba de resolverProblema con el caso de prueba 1 completo
+// Prueba de resolver_problema con el caso de prueba 1 completo
 // Verifica que los tres resultados sean correctos
 void probarResolverProblemaCaso1() {
     std::cout << "Resolver Problema Caso 1:" << std::endl;
@@ -425,14 +427,14 @@ void probarResolverProblemaCaso1() {
         {24, 36, 52, 0}
     };
 
-    ResultadoProblema resultado = resolverProblema(4, distancias, capacidades);
+    ResultadoProblema resultado = resolver_problema(4, distancias, capacidades);
 
     verificar(resultado.mst.size() == 3, "MST tiene 3 aristas");
     verificar(resultado.tsp.costo == 73, "TSP costo es 73");
     verificar(resultado.flujoMaximo == 78, "Flujo maximo es 78");
 }
 
-// Prueba que resolverProblema rechaza entrada invalida
+// Prueba que resolver_problema rechaza entrada invalida
 void probarResolverProblemaInvalido() {
     std::cout << "Resolver Problema Invalido:" << std::endl;
     bool excepcionLanzada = false;
@@ -441,11 +443,11 @@ void probarResolverProblemaInvalido() {
     std::vector<std::vector<int>> capacidades = {{0}};
 
     try {
-        resolverProblema(0, distancias, capacidades);
+        resolver_problema(0, distancias, capacidades);
     } catch (const std::invalid_argument&) {
         excepcionLanzada = true;
     }
-    verificar(excepcionLanzada, "N=0 lanza excepcion en resolverProblema");
+    verificar(excepcionLanzada, "N=0 lanza excepcion en resolver_problema");
 }
 
 // Funcion principal que ejecuta todas las pruebas y reporta resultados

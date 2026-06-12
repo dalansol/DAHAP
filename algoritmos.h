@@ -1,3 +1,5 @@
+// Copyright (c) 2026. All rights reserved.
+//
 // Funciones de algoritmos para la Situacion Problema 2: servicios de Internet para ISP.
 // Implementa: Arbol de expansion minima (Prim), Ruta mas corta TSP (fuerza bruta),
 //             Flujo maximo (Edmonds-Karp), Central mas cercana (distancia euclidiana).
@@ -19,37 +21,45 @@
 #include <string>
 #include <stdexcept>
 
-// Estructura que representa un punto en un plano coordenado bidimensional
+/**
+ * @brief Estructura que representa un punto en un plano coordenado bidimensional
+ */
 struct Punto {
-    double x = 0.0;
-    double y = 0.0;
+    double x = 0.0; /**< Coordenada en el eje X */
+    double y = 0.0; /**< Coordenada en el eje Y */
 };
 
-// Estructura que almacena una arista del arbol de expansion minima con sus nodos y peso
+/**
+ * @brief Estructura que almacena una arista del arbol de expansion minima con sus nodos y peso
+ */
 struct AristaMst {
-    std::string nodo1;
-    std::string nodo2;
-    int peso = 0;
+    std::string nodo1; /**< Identificador del primer nodo */
+    std::string nodo2; /**< Identificador del segundo nodo */
+    int peso = 0;      /**< Peso o costo de la arista */
 };
 
-// Estructura que almacena el resultado del problema del viajante (TSP)
+/**
+ * @brief Estructura que almacena el resultado del problema del viajante (TSP)
+ */
 struct ResultadoTsp {
-    std::vector<std::string> ruta;
-    int costo = 0;
+    std::vector<std::string> ruta; /**< Ruta optima de recorrido */
+    int costo = 0;                 /**< Costo total de la ruta */
 };
 
-// Estructura que agrupa los resultados de los tres algoritmos principales
+/**
+ * @brief Estructura que agrupa los resultados de los tres algoritmos principales
+ */
 struct ResultadoProblema {
-    std::vector<AristaMst> mst;
-    ResultadoTsp tsp;
-    int flujoMaximo = 0;
+    std::vector<AristaMst> mst; /**< Arbol de expansion minima */
+    ResultadoTsp tsp;           /**< Resultado del TSP */
+    int flujoMaximo = 0;        /**< Valor del flujo maximo */
 };
 
 // Funcion que valida que N sea un valor positivo
 // Recibe el numero de colonias n
 // Lanza una excepcion si n no es valido
 // Complejidad: O(1)
-inline void validarN(int n) {
+inline void validar_n(int n) {
     if (n <= 0) {
         throw std::invalid_argument("N debe ser mayor que 0");
     }
@@ -59,7 +69,7 @@ inline void validarN(int n) {
 // Recibe la dimension esperada n, la matriz a validar y el nombre de la matriz para mensajes
 // Lanza una excepcion si la matriz no tiene las dimensiones correctas
 // Complejidad: O(N)
-inline void validarDimensionMatriz(int n, const std::vector<std::vector<int>>& matriz,
+inline void validar_dimension_matriz(int n, const std::vector<std::vector<int>>& matriz,
                                    const std::string& nombreMatriz) {
     if (static_cast<int>(matriz.size()) != n) {
         throw std::invalid_argument("La " + nombreMatriz + " debe tener " +
@@ -78,7 +88,7 @@ inline void validarDimensionMatriz(int n, const std::vector<std::vector<int>>& m
 // Recibe la cantidad de nodos n y la matriz de adyacencias ponderada dist
 // Regresa un vector de aristas del MST, ordenadas por peso ascendente
 // Complejidad: O(V^2) siendo V la cantidad de colonias
-inline std::vector<AristaMst> calcularMst(int n, const std::vector<std::vector<int>>& dist) {
+inline std::vector<AristaMst> calcular_mst(int n, const std::vector<std::vector<int>>& dist) {
     std::vector<bool> enArbol(n, false);
     std::vector<int> costoMinimo(n, std::numeric_limits<int>::max());
     std::vector<int> padre(n, -1);
@@ -137,7 +147,7 @@ inline std::vector<AristaMst> calcularMst(int n, const std::vector<std::vector<i
 // Recibe la cantidad de nodos n y la matriz de adyacencias ponderada dist
 // Regresa un ResultadoTsp con la ruta optima y su costo
 // Complejidad: O(N!) siendo N la cantidad de colonias
-inline ResultadoTsp calcularTsp(int n, const std::vector<std::vector<int>>& dist) {
+inline ResultadoTsp calcular_tsp(int n, const std::vector<std::vector<int>>& dist) {
     ResultadoTsp resultado;
     resultado.costo = std::numeric_limits<int>::max();
 
@@ -199,7 +209,7 @@ inline ResultadoTsp calcularTsp(int n, const std::vector<std::vector<int>>& dist
 // Recibe la red residual, el nodo fuente, el sumidero y el vector de padres
 // Regresa true si existe un camino aumentante, false en caso contrario
 // Complejidad: O(V + E) siendo V los vertices y E las aristas
-inline bool buscarCaminoAumentante(const std::vector<std::vector<int>>& residual,
+inline bool buscar_camino_aumentante(const std::vector<std::vector<int>>& residual,
                                    int fuente, int sumidero, std::vector<int>& padre) {
     int cantidadNodos = static_cast<int>(residual.size());
     std::vector<bool> visitado(cantidadNodos, false);
@@ -236,14 +246,14 @@ inline bool buscarCaminoAumentante(const std::vector<std::vector<int>>& residual
 // Recibe la cantidad de nodos n y la matriz de capacidades maximas
 // Regresa el valor del flujo maximo desde el nodo 0 hasta el nodo n-1
 // Complejidad: O(V * E^2) siendo V los vertices y E las aristas
-inline int calcularFlujoMaximo(int n, const std::vector<std::vector<int>>& capacidad) {
+inline int calcular_flujo_maximo(int n, const std::vector<std::vector<int>>& capacidad) {
     // Crear la red residual como copia de las capacidades originales
     std::vector<std::vector<int>> residual = capacidad;
     std::vector<int> padre(n, -1);
     int flujoMaximo = 0;
 
     // Mientras exista un camino aumentante del nodo fuente al sumidero
-    while (buscarCaminoAumentante(residual, 0, n - 1, padre)) {
+    while (buscar_camino_aumentante(residual, 0, n - 1, padre)) {
         // Encontrar la capacidad minima en el camino encontrado
         int flujoRuta = std::numeric_limits<int>::max();
         for (int v = n - 1; v != 0; v = padre[v]) {
@@ -266,10 +276,14 @@ inline int calcularFlujoMaximo(int n, const std::vector<std::vector<int>>& capac
     return flujoMaximo;
 }
 
-// Funcion que calcula la distancia euclidiana entre dos puntos en el plano
-// Recibe dos puntos con coordenadas (x, y)
-// Regresa la distancia euclidiana como valor double
-// Complejidad: O(1)
+/**
+ * @brief Funcion que calcula la distancia euclidiana entre dos puntos en el plano
+ * @param a Primer punto en el plano
+ * @param b Segundo punto en el plano
+ * @return La distancia euclidiana entre a y b
+ *
+ * Complejidad: O(1)
+ */
 inline double calcularDistanciaEuclidiana(const Punto& a, const Punto& b) {
     double dx = a.x - b.x;
     double dy = a.y - b.y;
@@ -280,7 +294,7 @@ inline double calcularDistanciaEuclidiana(const Punto& a, const Punto& b) {
 // Recibe la lista de centrales y el punto de la nueva contratacion
 // Regresa el punto de la central mas cercana
 // Complejidad: O(N) siendo N la cantidad de centrales
-inline Punto encontrarCentralCercana(const std::vector<Punto>& centrales, const Punto& nuevoPunto) {
+inline Punto encontrar_central_cercana(const std::vector<Punto>& centrales, const Punto& nuevoPunto) {
     if (centrales.empty()) {
         throw std::invalid_argument("La lista de centrales no puede estar vacia");
     }
@@ -304,17 +318,17 @@ inline Punto encontrarCentralCercana(const std::vector<Punto>& centrales, const 
 // Recibe la cantidad de nodos n, la matriz de distancias y la matriz de capacidades
 // Regresa un ResultadoProblema con MST, TSP y flujo maximo
 // Complejidad: depende de cada algoritmo individual
-inline ResultadoProblema resolverProblema(int n,
+inline ResultadoProblema resolver_problema(int n,
                                           const std::vector<std::vector<int>>& distancias,
                                           const std::vector<std::vector<int>>& capacidades) {
-    validarN(n);
-    validarDimensionMatriz(n, distancias, "distancias");
-    validarDimensionMatriz(n, capacidades, "capacidades");
+    validar_n(n);
+    validar_dimension_matriz(n, distancias, "distancias");
+    validar_dimension_matriz(n, capacidades, "capacidades");
 
     ResultadoProblema resultado;
-    resultado.mst = calcularMst(n, distancias);
-    resultado.tsp = calcularTsp(n, distancias);
-    resultado.flujoMaximo = calcularFlujoMaximo(n, capacidades);
+    resultado.mst = calcular_mst(n, distancias);
+    resultado.tsp = calcular_tsp(n, distancias);
+    resultado.flujoMaximo = calcular_flujo_maximo(n, capacidades);
 
     return resultado;
 }

@@ -1,3 +1,5 @@
+// Copyright (c) 2026. All rights reserved.
+//
 // Programa API REST para la Situacion Problema 2: servicios de Internet para ISP.
 // Expone endpoints HTTP para ejecutar algoritmos de grafos y geometria computacional,
 // recibiendo datos en formato JSON y respondiendo con los resultados en JSON.
@@ -29,7 +31,7 @@ int main() {
             auto distancias = cuerpo["distancias"].get<std::vector<std::vector<int>>>();
             auto capacidades = cuerpo["capacidades"].get<std::vector<std::vector<int>>>();
 
-            ResultadoProblema resultado = resolverProblema(n, distancias, capacidades);
+            ResultadoProblema resultado = resolver_problema(n, distancias, capacidades);
 
             // Construir JSON de respuesta con aristas del MST
             nlohmann::json salida;
@@ -73,7 +75,7 @@ int main() {
             nuevoPunto.x = cuerpo["punto"][0].get<double>();
             nuevoPunto.y = cuerpo["punto"][1].get<double>();
 
-            Punto cercana = encontrarCentralCercana(centrales, nuevoPunto);
+            Punto cercana = encontrar_central_cercana(centrales, nuevoPunto);
 
             nlohmann::json salida;
             salida["centralCercana"] = {cercana.x, cercana.y};
