@@ -284,7 +284,7 @@ inline int calcular_flujo_maximo(int n, const std::vector<std::vector<int>>& cap
  *
  * Complejidad: O(1)
  */
-inline double calcularDistanciaEuclidiana(const Punto& a, const Punto& b) {
+inline double calcular_distancia_euclidiana(const Punto& a, const Punto& b) {
     double dx = a.x - b.x;
     double dy = a.y - b.y;
     return std::sqrt(dx * dx + dy * dy);
@@ -300,11 +300,11 @@ inline Punto encontrar_central_cercana(const std::vector<Punto>& centrales, cons
     }
 
     int indiceCercana = 0;
-    double distanciaMinima = calcularDistanciaEuclidiana(centrales[0], nuevoPunto);
+    double distanciaMinima = calcular_distancia_euclidiana(centrales[0], nuevoPunto);
 
     // Comparar la distancia a cada central para encontrar la menor
     for (int i = 1; i < static_cast<int>(centrales.size()); i++) {
-        double distanciaActual = calcularDistanciaEuclidiana(centrales[i], nuevoPunto);
+        double distanciaActual = calcular_distancia_euclidiana(centrales[i], nuevoPunto);
         if (distanciaActual < distanciaMinima) {
             distanciaMinima = distanciaActual;
             indiceCercana = i;
