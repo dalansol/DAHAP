@@ -1,5 +1,8 @@
-// Copyright (c) 2026. All rights reserved.
-//
+
+/*
+ * Copyright (c) 2026. All rights reserved.
+ */
+
 // Funciones de algoritmos para la Situacion Problema 2: servicios de Internet para ISP.
 // Implementa: Arbol de expansion minima (Prim), Ruta mas corta TSP (fuerza bruta),
 //             Flujo maximo (Edmonds-Karp), Central mas cercana (distancia euclidiana).
@@ -8,7 +11,7 @@
 //      Patricio Javier Garza Rios | A00841942
 //      Daniela Landin Solis | A00841757
 //      Alana Martinez Morales | A00841524
-// Fecha: 10 de junio 2026
+// Fecha: 11 de junio 2026
 
 #ifndef ALGORITMOS_H
 #define ALGORITMOS_H
@@ -55,10 +58,12 @@ struct ResultadoProblema {
     int flujoMaximo = 0;        /**< Valor del flujo maximo */
 };
 
-// Funcion que valida que N sea un valor positivo
-// Recibe el numero de colonias n
-// Lanza una excepcion si n no es valido
-// Complejidad: O(1)
+/**
+ * @brief Funcion que valida que N sea un valor positivo
+ * Recibe el numero de colonias n
+ * Lanza una excepcion si n no es valido
+ * Complejidad: O(1)
+ */
 inline void validar_n(int n) {
     if (n <= 0) {
         throw std::invalid_argument("N debe ser mayor que 0");

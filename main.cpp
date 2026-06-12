@@ -1,5 +1,8 @@
-// Copyright (c) 2026. All rights reserved.
-//
+
+/*
+ * Copyright (c) 2026. All rights reserved.
+ */
+
 // Programa API REST para la Situacion Problema 2: servicios de Internet para ISP.
 // Expone endpoints HTTP para ejecutar algoritmos de grafos y geometria computacional,
 // recibiendo datos en formato JSON y respondiendo con los resultados en JSON.
