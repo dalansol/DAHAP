@@ -267,8 +267,9 @@ jobs:
             -Dsonar.tests=.
             -Dsonar.cfamily.compile-commands=build/compile_commands.json
             -Dsonar.exclusions=build/**,third_party/**,httplib.h,json.hpp
-            -Dsonar.test.inclusions=tests/**/*.cpp
+            -Dsonar.test.inclusions=test_algoritmos.cpp
             -Dsonar.coverageReportPaths=build/coverage/sonarqube-coverage.xml
+            -Dsonar.coverage.exclusions=main.cpp
             -Dsonar.verbose=true
 
   dast-zap:

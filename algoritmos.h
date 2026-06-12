@@ -12,7 +12,7 @@
 #define ALGORITMOS_H
 
 #include <vector>
-#include <climits>
+#include <limits>
 #include <algorithm>
 #include <queue>
 #include <cmath>
@@ -27,8 +27,8 @@ struct Punto {
 
 // Estructura que almacena una arista del arbol de expansion minima con sus nodos y peso
 struct AristaMst {
-    std::string nodo1 = "";
-    std::string nodo2 = "";
+    std::string nodo1;
+    std::string nodo2;
     int peso = 0;
 };
 
@@ -80,7 +80,7 @@ inline void validarDimensionMatriz(int n, const std::vector<std::vector<int>>& m
 // Complejidad: O(V^2) siendo V la cantidad de colonias
 inline std::vector<AristaMst> calcularMst(int n, const std::vector<std::vector<int>>& dist) {
     std::vector<bool> enArbol(n, false);
-    std::vector<int> costoMinimo(n, INT_MAX);
+    std::vector<int> costoMinimo(n, std::numeric_limits<int>::max());
     std::vector<int> padre(n, -1);
     std::vector<AristaMst> aristas;
 
@@ -139,7 +139,7 @@ inline std::vector<AristaMst> calcularMst(int n, const std::vector<std::vector<i
 // Complejidad: O(N!) siendo N la cantidad de colonias
 inline ResultadoTsp calcularTsp(int n, const std::vector<std::vector<int>>& dist) {
     ResultadoTsp resultado;
-    resultado.costo = INT_MAX;
+    resultado.costo = std::numeric_limits<int>::max();
 
     // Caso especial: un solo nodo
     if (n <= 1) {
@@ -245,7 +245,7 @@ inline int calcularFlujoMaximo(int n, const std::vector<std::vector<int>>& capac
     // Mientras exista un camino aumentante del nodo fuente al sumidero
     while (buscarCaminoAumentante(residual, 0, n - 1, padre)) {
         // Encontrar la capacidad minima en el camino encontrado
-        int flujoRuta = INT_MAX;
+        int flujoRuta = std::numeric_limits<int>::max();
         for (int v = n - 1; v != 0; v = padre[v]) {
             int u = padre[v];
             if (residual[u][v] < flujoRuta) {

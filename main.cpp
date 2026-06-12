@@ -91,7 +91,7 @@ int main() {
         respuesta.set_content("{\"status\": \"UP\"}", "application/json");
     });
 
-    std::cout << "Servidor iniciado en puerto " << PUERTO_SERVIDOR << std::endl;
+    std::cout << "Servidor iniciado en puerto " << PUERTO_SERVIDOR << '\n';
     servidor.listen("0.0.0.0", PUERTO_SERVIDOR);
 
     return 0;
