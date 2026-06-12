@@ -1,0 +1,149 @@
+{
+  "info": {
+    "_postman_id": "f2cdd831-1ca5-441a-af01-d6190a983988",
+    "name": "ISP Algorithms API",
+    "description": "Colección de Postman para probar el servicio de algoritmos ISP (MST, TSP, Flujo Máximo y Central Cercana).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET /health",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const body = pm.response.json();",
+                  "pm.test('status is UP', function () {",
+                  "    pm.expect(body.status).to.eql('UP');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Algorithms",
+      "item": [
+        {
+          "name": "POST /",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const body = pm.response.json();",
+                  "pm.test('mst exists', function () {",
+                  "    pm.expect(body).to.have.property('mst');",
+                  "});",
+                  "pm.test('tsp exists', function () {",
+                  "    pm.expect(body).to.have.property('tsp');",
+                  "});",
+                  "pm.test('flujoMaximo exists', function () {",
+                  "    pm.expect(body).to.have.property('flujoMaximo');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"N\": 4,\n  \"distancias\": [\n    [0, 1, 2, 3],\n    [1, 0, 4, 5],\n    [2, 4, 0, 6],\n    [3, 5, 6, 0]\n  ],\n  \"capacidades\": [\n    [0, 10, 0, 0],\n    [0, 0, 5, 0],\n    [0, 0, 0, 2],\n    [0, 0, 0, 0]\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /centralCercana",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const body = pm.response.json();",
+                  "pm.test('centralCercana exists', function () {",
+                  "    pm.expect(body).to.have.property('centralCercana');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"centrales\": [\n    [1.0, 2.0],\n    [3.0, 4.0]\n  ],\n  \"punto\": [5.0, 6.0]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/centralCercana",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "centralCercana"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
