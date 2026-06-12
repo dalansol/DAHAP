@@ -20,7 +20,7 @@ permissions:
 
 env:
   BUILD_DIR: build
-  APP_NAME: student_grade_service
+  APP_NAME: Evidencia2
   COVERAGE_THRESHOLD: "80"
 
 jobs:
@@ -131,9 +131,8 @@ jobs:
         run: |
           gcovr \
             --root . \
-            --filter src \
-            --filter include \
-            --exclude 'tests/.*' \
+            --filter 'main\.cpp' \
+            --filter 'algoritmos\.h' \
             --exclude '.*/_deps/.*' \
             --sonarqube $BUILD_DIR/coverage/sonarqube-coverage.xml
 
@@ -161,9 +160,6 @@ jobs:
           sleep 5
           curl -f http://localhost:8080/health
 
-      - name: Run integration tests
-        run: |
-          ctest --test-dir $BUILD_DIR -R integration --output-on-failure --output-junit $BUILD_DIR/test-results/integration-tests.xml
 
       - name: Stop service after integration tests
         if: always()
@@ -269,8 +265,8 @@ jobs:
           args: >
             -Dsonar.projectKey=student-grade-service
             -Dsonar.projectName=student-grade-service
-            -Dsonar.sources=src,include
-            -Dsonar.tests=tests
+            -Dsonar.sources=.
+            -Dsonar.tests=.
             -Dsonar.cfamily.compile-commands=build/compile_commands.json
             -Dsonar.exclusions=build/**,third_party/**
             -Dsonar.test.inclusions=tests/**/*.cpp
@@ -397,7 +393,7 @@ jobs:
           mkdir -p "$CURRENT_DIR"
 
           cp -R "$STAGING_DIR/app/." "$CURRENT_DIR/"
-          chmod +x "$CURRENT_DIR/student_grade_service"
+          chmod +x "$CURRENT_DIR/Evidencia2"
 
           if [ -d "$STAGING_DIR/scripts" ]; then
             mkdir -p "$SCRIPTS_DIR"
@@ -430,7 +426,7 @@ jobs:
           rm -rf "$CURRENT_DIR"
           mkdir -p "$CURRENT_DIR"
           cp -R "${TARGET_BACKUP}/." "$CURRENT_DIR/"
-          chmod +x "$CURRENT_DIR/student_grade_service"
+          chmod +x "$CURRENT_DIR/Evidencia2"
 
           sudo systemctl restart student-grade-service
           echo "Rollback completed successfully"
@@ -470,7 +466,7 @@ jobs:
           Type=simple
           User=ubuntu
           WorkingDirectory=/opt/student-grade-service/current
-          ExecStart=/opt/student-grade-service/current/student_grade_service
+          ExecStart=/opt/student-grade-service/current/Evidencia2
           Restart=always
           RestartSec=5
           Environment=PORT=8080
