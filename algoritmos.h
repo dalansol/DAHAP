@@ -89,6 +89,30 @@ inline void validar_dimension_matriz(int n, const std::vector<std::vector<int>>&
     }
 }
 
+// Funcion auxiliar para encontrar el nodo con menor costo que no este en el arbol
+inline int encontrar_nodo_minimo(int n, const std::vector<bool>& enArbol, const std::vector<int>& costoMinimo) {
+    int u = -1;
+    for (int v = 0; v < n; v++) {
+        if (!enArbol[v] && (u == -1 || costoMinimo[v] < costoMinimo[u])) {
+            u = v;
+        }
+    }
+    return u;
+}
+
+// Funcion auxiliar para registrar una nueva arista en el MST
+inline void registrar_arista_mst(int u, int padre_u, int costo, std::vector<AristaMst>& aristas) {
+    if (padre_u != -1) {
+        AristaMst arista;
+        int menor = std::min(padre_u, u);
+        int mayor = std::max(padre_u, u);
+        arista.nodo1 = std::string(1, static_cast<char>('A' + menor));
+        arista.nodo2 = std::string(1, static_cast<char>('A' + mayor));
+        arista.peso = costo;
+        aristas.push_back(arista);
+    }
+}
+
 // Funcion que implementa el algoritmo de Prim para encontrar el arbol de expansion minima
 // Recibe la cantidad de nodos n y la matriz de adyacencias ponderada dist
 // Regresa un vector de aristas del MST, ordenadas por peso ascendente
@@ -104,26 +128,10 @@ inline std::vector<AristaMst> calcular_mst(int n, const std::vector<std::vector<
 
     // Ciclo que agrega un nodo al arbol en cada iteracion
     for (int i = 0; i < n; i++) {
-        // Buscar el nodo no incluido con menor costo
-        int u = -1;
-        for (int v = 0; v < n; v++) {
-            if (!enArbol[v] && (u == -1 || costoMinimo[v] < costoMinimo[u])) {
-                u = v;
-            }
-        }
-
+        int u = encontrar_nodo_minimo(n, enArbol, costoMinimo);
         enArbol[u] = true;
 
-        // Registrar la arista cuando un nodo distinto a la raiz es agregado al arbol
-        if (padre[u] != -1) {
-            AristaMst arista;
-            int menor = std::min(padre[u], u);
-            int mayor = std::max(padre[u], u);
-            arista.nodo1 = std::string(1, static_cast<char>('A' + menor));
-            arista.nodo2 = std::string(1, static_cast<char>('A' + mayor));
-            arista.peso = costoMinimo[u];
-            aristas.push_back(arista);
-        }
+        registrar_arista_mst(u, padre[u], costoMinimo[u], aristas);
 
         // Actualizar costos de los vecinos del nodo recien agregado
         for (int v = 0; v < n; v++) {
